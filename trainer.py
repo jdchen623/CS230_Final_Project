@@ -6,6 +6,7 @@ import model_architecture
 from tensorflow.python.client import device_lib
 from config import *
 
+
 print(device_lib.list_local_devices())
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
@@ -45,7 +46,7 @@ def trainer(network,number_of_images):
 
             print('Epoch number ', epoch, 'batch', batch, 'complete')
             writer.add_summary(summary,counter)
-        saver.save(session, os.path.join(model_save_name))
+        saver.save(session, os.path.join("checkpoints/",model_save_name))
 
 
 if __name__=="__main__":
