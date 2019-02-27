@@ -16,14 +16,14 @@ import resnet
 
 
 # Dataset Configuration
-tf.app.flags.DEFINE_string('train_dataset', 'scripts/train_shuffle.txt', """Path to the ILSVRC2012 the training dataset list file""")
-tf.app.flags.DEFINE_string('train_image_root', '/data1/common_datasets/imagenet_resized/', """Path to the root of ILSVRC2012 training images""")
-tf.app.flags.DEFINE_string('val_dataset', 'scripts/val.txt', """Path to the test dataset list file""")
-tf.app.flags.DEFINE_string('val_image_root', '/data1/common_datasets/imagenet_resized/ILSVRC2012_val/', """Path to the root of ILSVRC2012 test images""")
+tf.app.flags.DEFINE_string('train_dataset', 'scripts/train_labels.txt', """Path to the ILSVRC2012 the training dataset list file""")
+tf.app.flags.DEFINE_string('train_image_root', 'data/train', """Path to the root of ILSVRC2012 training images""")
+tf.app.flags.DEFINE_string('val_dataset', 'scripts/val_labels.txt', """Path to the test dataset list file""")
+tf.app.flags.DEFINE_string('val_image_root', 'data/val', """Path to the root of ILSVRC2012 test images""")
 tf.app.flags.DEFINE_string('mean_path', './ResNet_mean_rgb.pkl', """Path to the imagenet mean""")
-tf.app.flags.DEFINE_integer('num_classes', 1000, """Number of classes in the dataset.""")
-tf.app.flags.DEFINE_integer('num_train_instance', 1281167, """Number of training images.""")
-tf.app.flags.DEFINE_integer('num_val_instance', 50000, """Number of val images.""")
+tf.app.flags.DEFINE_integer('num_classes', 33, """Number of classes in the dataset.""")
+tf.app.flags.DEFINE_integer('num_train_instance', 68700, """Number of training images.""")
+tf.app.flags.DEFINE_integer('num_val_instance', 10432, """Number of val images.""")
 
 # Network Configuration
 tf.app.flags.DEFINE_integer('batch_size', 256, """Number of images to process in a batch.""")
@@ -38,7 +38,7 @@ tf.app.flags.DEFINE_float('lr_decay', 0.1, """Learning rate decay factor""")
 tf.app.flags.DEFINE_boolean('finetune', False, """Whether to finetune.""")
 
 # Training Configuration
-tf.app.flags.DEFINE_string('train_dir', './train', """Directory where to write log and checkpoint.""")
+tf.app.flags.DEFINE_string('train_dir', './checkpoints', """Directory where to write log and checkpoint.""")
 tf.app.flags.DEFINE_integer('max_steps', 500000, """Number of batches to run.""")
 tf.app.flags.DEFINE_integer('display', 100, """Number of iterations to display training info.""")
 tf.app.flags.DEFINE_integer('val_interval', 1000, """Number of iterations to run a val""")
@@ -100,6 +100,8 @@ def train():
         # Get images and labels of ImageNet
         import multiprocessing
         num_threads = multiprocessing.cpu_count() / FLAGS.num_gpus
+        #print("count:", multiprocessing.cpu_count())
+        #num_threads = multiprocessing.cpu_count()
         print('Load ImageNet dataset(%d threads)' % num_threads)
         with tf.device('/cpu:0'):
             print('\tLoading training data from %s' % FLAGS.train_dataset)

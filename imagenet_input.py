@@ -15,7 +15,7 @@ from __future__ import print_function
 import functools
 
 import tensorflow as tf
-import cPickle as pickle
+import _pickle as pickle
 import numpy as np
 
 from tensorflow.python.platform import gfile
@@ -169,7 +169,9 @@ def inputs_base(dataset_root, txt_fpath, batch_size, shuffle=False, num_threads=
     images_list, labels_list = [], []
     for i in range(num_sets):
         preprocess_map = functools.partial(preprocess, distortion=False, center_crop=center_crop)
-        dataset_set = dataset.apply(tf.contrib.data.map_and_batch(preprocess_map, batch_size, num_threads))
+        print("batch_size:", batch_size)
+        print("num_threads:", num_threads)
+        dataset_set = dataset.apply(tf.contrib.data.map_and_batch(preprocess_map, int(batch_size), int(num_threads)))
 
         # dataset_set = dataset_set.prefetch(10)
         dataset_set = dataset_set.apply(tf.contrib.data.prefetch_to_device('/GPU:%d'%i))
