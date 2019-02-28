@@ -107,9 +107,12 @@ class ResNet(object):
         with tf.device('/CPU:0'):
             self.logits = tf.concat(self._logits_list, axis=0, name="logits")
             self.preds = tf.concat(self._preds_list, axis=0, name="predictions")
+            print(self._loss_list)
             self.loss = tf.reduce_mean(self._loss_list, name="cross_entropy")
+            print("loss", self.loss)
             tf.summary.scalar((self._name+"/" if self._name else "") + "cross_entropy", self.loss)
             self.acc = tf.reduce_mean(self._acc_list, name="accuracy")
+            print("acc", self.acc)
             tf.summary.scalar((self._name+"/" if self._name else "") + "accuracy", self.acc)
 
 
