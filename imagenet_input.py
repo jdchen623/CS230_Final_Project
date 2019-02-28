@@ -172,7 +172,7 @@ def inputs_base(dataset_root, txt_fpath, batch_size, shuffle=False, num_threads=
         print("batch_size:", batch_size)
         print("num_threads:", num_threads)
         dataset_set = dataset.apply(tf.contrib.data.map_and_batch(preprocess_map, int(batch_size), int(num_threads)))
-        print(data_set)
+        print(dataset_set)
         # dataset_set = dataset_set.prefetch(10)
         dataset_set = dataset_set.apply(tf.contrib.data.prefetch_to_device('/GPU:%d'%i))
         iterator = dataset_set.make_one_shot_iterator()
