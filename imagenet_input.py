@@ -190,4 +190,3 @@ def distorted_inputs(dataset_root, txt_fpath, batch_size, shuffle=True, num_thre
 
 def inputs(dataset_root, txt_fpath, batch_size, shuffle=False, num_threads=60, num_sets=1, center_crop=False):
     return inputs_base(dataset_root, txt_fpath, batch_size, shuffle, num_threads, num_sets, center_crop)
-

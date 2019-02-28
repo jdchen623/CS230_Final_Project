@@ -2,12 +2,12 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 export LD_PRELOAD="/usr/lib/libtcmalloc.so"
 train_dir="./resnet_baseline"
-train_dataset="scripts/train_shuffle.txt"
-train_image_root="/data1/common_datasets/imagenet_resized/"
-val_dataset="scripts/val.txt"
-val_image_root="/data1/common_datasets/imagenet_resized/ILSVRC2012_val/"
+train_dataset="scripts/train_labels.txt"
+train_image_root="data/train"
+val_dataset="scripts/val_labels.txt"
+val_image_root="data/val"
 
-python train.py --train_dir $train_dir \
+python3 train.py --train_dir $train_dir \
     --train_dataset $train_dataset \
     --train_image_root $train_image_root \
     --val_dataset $val_dataset \
