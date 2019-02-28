@@ -7,7 +7,7 @@
 
 
 import numpy as np
-get_ipython().magic(u'matplotlib inline')
+# get_ipython().magic(u'matplotlib inline')
 import matplotlib.pyplot as plt
 from PIL import Image
 
