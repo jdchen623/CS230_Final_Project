@@ -171,6 +171,7 @@ def train():
                                                 sess.graph)
 
         # Training!
+        print("training")
         val_best_acc = 0.0
         for step in range(init_step, FLAGS.max_steps):
             # val
