@@ -1,5 +1,5 @@
 #!/bin/sh
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+export CUDA_VISIBLE_DEVICES=0
 export LD_PRELOAD="/usr/lib/libtcmalloc.so"
 train_dir="./resnet_baseline"
 train_dataset="scripts/train_labels.txt"
@@ -13,7 +13,7 @@ python3 train.py --train_dir $train_dir \
     --val_dataset $val_dataset \
     --val_image_root $val_image_root \
     --batch_size 64 \
-    --num_gpus 4 \
+    --num_gpus 1 \
     --val_interval 1000 \
     --val_iter 100 \
     --l2_weight 0.0001 \
