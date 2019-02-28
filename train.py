@@ -179,7 +179,6 @@ def train():
             if step % FLAGS.val_interval == 0:
                 val_loss, val_acc = 0.0, 0.0
                 for i in range(FLAGS.val_iter):
-                    print(FLAGS.val_iter)
                     print("2")
                     loss_value, acc_value = sess.run([network_val.loss, network_val.acc],
                                 feed_dict={network_val.is_train:False})
