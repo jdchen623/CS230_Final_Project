@@ -22,8 +22,8 @@ tf.app.flags.DEFINE_string('val_dataset', 'scripts/val_labels.txt', """Path to t
 tf.app.flags.DEFINE_string('val_image_root', 'data/val', """Path to the root of ILSVRC2012 test images""")
 tf.app.flags.DEFINE_string('mean_path', './ResNet_mean_rgb.pkl', """Path to the imagenet mean""")
 tf.app.flags.DEFINE_integer('num_classes', 33, """Number of classes in the dataset.""")
-tf.app.flags.DEFINE_integer('num_train_instance', 687, """Number of training images.""")
-tf.app.flags.DEFINE_integer('num_val_instance', 104, """Number of val images.""")
+tf.app.flags.DEFINE_integer('num_train_instance', 68700, """Number of training images.""")
+tf.app.flags.DEFINE_integer('num_val_instance', 10432, """Number of val images.""")
 
 # Network Configuration
 tf.app.flags.DEFINE_integer('batch_size', 256, """Number of images to process in a batch.""")
