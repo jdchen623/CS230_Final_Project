@@ -24,7 +24,7 @@ python3 train.py --train_dir $train_dir \
     --checkpoint_interval 5000 \
     --gpu_fraction 0.96 \
     --display 100 \
-    --basemodel "./init/model.ckpt" \
+    #--basemodel "./init/model.ckpt" \
     #--finetune True \
 
 # ResNet-18 baseline loaded from torch resnet-18.t7
