@@ -180,8 +180,8 @@ def train():
                 val_loss, val_acc = 0.0, 0.0
                 for i in range(FLAGS.val_iter):
                     print("2")
-                    # loss_value, acc_value = sess.run([network_val.loss, network_val.acc],
-                    #             feed_dict={network_val.is_train:False})
+                    loss_value, acc_value = sess.run([network_val.loss, network_val.acc],
+                                feed_dict={network_val.is_train:False})
                     print("3")
                     val_loss += loss_value
                     val_acc += acc_value
