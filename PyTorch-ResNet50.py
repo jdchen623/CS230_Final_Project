@@ -148,7 +148,7 @@ def train_model(model, criterion, optimizer, num_epochs=15):
 # In[ ]:
 
 
-model_trained = train_model(model, criterion, optimizer, num_epochs=15)
+model_trained = train_model(model, criterion, optimizer, num_epochs=20)
 
 
 # ### 5. Save and load the model
