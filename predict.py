@@ -15,11 +15,11 @@ import torch
 from torchvision import datasets, models, transforms
 import torch.nn as nn
 from torch.nn import functional as F
-from sklearn import *
-from sklearn.metrics import *
+from sklearn.metrics import precision_recall_fscore_support
 import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
+
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
