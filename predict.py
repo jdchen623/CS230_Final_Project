@@ -111,7 +111,7 @@ for i in range(0, int(len(img_list)/ batch_size)):
     pred_logits_tensor = model(validation_batch)
     pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
     pred_index = np.argmax(pred_probs, axis = 1)
-    y_pred.extends(pred_index)
+    y_pred.extend(pred_index)
 
 # In[ ]:
 
