@@ -15,6 +15,7 @@ import torch
 from torchvision import datasets, models, transforms
 import torch.nn as nn
 from torch.nn import functional as F
+from sklearn import *
 from sklearn.metrics import *
 import torch.optim as optim
 import os
