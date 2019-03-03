@@ -11,15 +11,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
-
-# In[33]:
-
-
 import torch
 from torchvision import datasets, models, transforms
 import torch.nn as nn
 from torch.nn import functional as F
 import torch.optim as optim
+import os
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -64,3 +61,26 @@ for i, img in enumerate(img_list):
     ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
                                                           100*pred_probs[i,1]))
     ax.imshow(img)
+
+
+
+from preprocess import makeFileNameAndStylePairs
+
+def get_validation_images():
+    labels_dict = makeFileNameAndStylePairs()
+    validation_file_names = []
+    validation_file_labels = []
+
+    for root, dirs, files in os.walk("data/validation"):
+        for directory in dirs:
+            directory_path = os.path.join(root, directory)
+
+            for subroot, subdir, subfiles in os.walk(directory_path):
+                for subfile in subfiles:
+                    if subfile == ".DS_Store": continue
+                    file_path = os.path.join(subroot, subfile)
+                    img_label = labels_dict[subfile]
+                    if type(img_label) is not str: continue
+                    validation_file_names.append(os.path.join(subroot, subfile))
+                    validation_file_labels.append(labels_dict[subfile])
+    return validation_file_names, validation_file_labels
