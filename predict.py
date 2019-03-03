@@ -129,7 +129,7 @@ y_pred.extend(pred_index)
 
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 print(results)
-print(results, file = open("results/precision_recall"))
+print(results, file = open("results/precision_recall.txt"))
 
 
 
