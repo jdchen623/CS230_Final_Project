@@ -21,7 +21,6 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
     validation_file_names = []
