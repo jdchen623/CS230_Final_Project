@@ -103,7 +103,7 @@ batch_size = 100
 y_pred = []
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
-for i in range(0, len(img_list)/ batch_size):
+for i in range(0, int(len(img_list)/ batch_size)):
     img_batch = img_list[i * batch_size : (i + 1) * batch_size]
 # In[ ]:
     validation_batch = torch.stack([data_transforms['validation'](img).to(device)
