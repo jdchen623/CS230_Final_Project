@@ -21,13 +21,14 @@ import torch.nn as nn
 from torch.nn import functional as F
 import torch.optim as optim
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 model = models.resnet50(pretrained=False).to(device)
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 33)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights.h5'))
+model.load_state_dict(torch.load('models/pytorch/weights.h5')
 
 
 # ### 6. Make predictions on sample test images
@@ -35,9 +36,7 @@ model.load_state_dict(torch.load('models/pytorch/weights.h5'))
 # In[ ]:
 
 
-validation_img_paths = ["data/validation/alien/11.jpg",
-                        "data/validation/alien/22.jpg",
-                        "data/validation/predator/33.jpg"]
+validation_img_paths = ["data/validation/Cubism/1335.jpg"]
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
 
@@ -53,7 +52,7 @@ validation_batch = torch.stack([data_transforms['validation'](img).to(device)
 
 pred_logits_tensor = model(validation_batch)
 pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
-
+print(pred_probs)
 
 # In[ ]:
 

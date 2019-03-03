@@ -141,6 +141,10 @@ def train_model(model, criterion, optimizer, num_epochs=15):
 
             print('{} loss: {:.4f}, acc: {:.4f}'.format(phase,
                                                         epoch_loss.item(),
+                                                        epoch_acc.item()))
+
+            print('{} loss: {:.4f}, acc: {:.4f}'.format(phase,
+                                                        epoch_loss.item(),
                                                         epoch_acc.item()), file=open("results/results.txt", "a"))
     return model
 
