@@ -18,6 +18,28 @@ from torch.nn import functional as F
 from sklearn.metrics import *
 import torch.optim as optim
 import os
+from preprocess import makeFileNameAndStylePairs
+
+def get_validation_images():
+    labels_dict = makeFileNameAndStylePairs()
+    validation_file_names = []
+    validation_file_labels = []
+    validation_file_numeric_labels = []
+
+    for root, dirs, files in os.walk("data/validation"):
+        dir_index = 0
+        for directory in dirs:
+            directory_path = os.path.join(root, directory)
+            for subroot, subdir, subfiles in os.walk(directory_path):
+                for subfile in subfiles:
+                    if subfile == ".DS_Store": continue
+                    file_path = os.path.join(subroot, subfile)
+                    if subfile == ".DS_Store": continue
+                    validation_file_names.append(os.path.join(subroot, subfile))
+                    validation_file_labels.append(labels_dict[subfile])
+                    validation_file_numeric_labels.append(dir_index)
+            dir_index += 1
+    return validation_file_names, validation_file_numeric_labels
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                                   std=[0.229, 0.224, 0.225])
@@ -68,6 +90,7 @@ model.fc = nn.Sequential(
 model.load_state_dict(torch.load('models/pytorch/weights.h5'))
 
 
+
 # ### 6. Make predictions on sample test images
 
 # In[ ]:
@@ -107,30 +130,3 @@ print(results, file = open("results/precision_recall"))
 #     ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
 #                                                           100*pred_probs[i,1]))
 #     ax.imshow(img)
-
-
-
-from preprocess import makeFileNameAndStylePairs
-
-
-
-def get_validation_images():
-    labels_dict = makeFileNameAndStylePairs()
-    validation_file_names = []
-    validation_file_labels = []
-    validation_file_numeric_labels = []
-
-    for root, dirs, files in os.walk("data/validation"):
-        dir_index = 0
-        for directory in dirs:
-            directory_path = os.path.join(root, directory)
-            for subroot, subdir, subfiles in os.walk(directory_path):
-                for subfile in subfiles:
-                    if subfile == ".DS_Store": continue
-                    file_path = os.path.join(subroot, subfile)
-                    if subfile == ".DS_Store": continue
-                    validation_file_names.append(os.path.join(subroot, subfile))
-                    validation_file_labels.append(labels_dict[subfile])
-                    validation_file_numeric_labels.append(dir_index)
-            dir_index += 1
-    return validation_file_names, validation_file_numeric_labels
