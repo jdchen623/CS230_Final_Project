@@ -98,6 +98,7 @@ model.load_state_dict(torch.load('models/pytorch/weights.h5'))
 validation_file_names, y_labels = get_validation_images()
 
 validation_img_paths = validation_file_names
+
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
 
@@ -117,6 +118,7 @@ pred_index = np.argmax(pred_probs, axis = 1)
 results = sklearn.metrics.precision_recall_fscore_support(y_labels, pred_index, average = weighted)
 print(results)
 print(results, file = open("results/precision_recall"))
+
 
 
 
