@@ -15,6 +15,7 @@ import torch
 from torchvision import datasets, models, transforms
 import torch.nn as nn
 from torch.nn import functional as F
+from sklearn.metrics import *
 import torch.optim as optim
 import os
 
@@ -71,8 +72,9 @@ model.load_state_dict(torch.load('models/pytorch/weights.h5'))
 
 # In[ ]:
 
+validation_file_names, y_labels = get_validation_images()
 
-validation_img_paths = ["data/validation/Cubism/1335.jpg"]
+validation_img_paths = validation_file_names
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
 
@@ -88,9 +90,11 @@ validation_batch = torch.stack([data_transforms['validation'](img).to(device)
 
 pred_logits_tensor = model(validation_batch)
 pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
-pred_index = np.argmax(pred_probs)
-print(pred_index)
-print(pred_index.size)
+pred_index = np.argmax(pred_probs, axis = 1)
+results = sklearn.metrics.precision_recall_fscore_support(y_labels, pred_index, average = weighted)
+print(results)
+print(results, file = open("results/precision_recall"))
+
 
 
 # In[ ]:
@@ -107,6 +111,8 @@ print(pred_index.size)
 
 
 from preprocess import makeFileNameAndStylePairs
+
+
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
@@ -128,6 +134,3 @@ def get_validation_images():
                     validation_file_numeric_labels.append(dir_index)
             dir_index += 1
     return validation_file_names, validation_file_numeric_labels
-
-    
-        
