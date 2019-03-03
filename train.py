@@ -91,7 +91,7 @@ for param in model.parameters():
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
-               nn.Linear(128, 33)).to(device)
+               nn.Linear(128, 21)).to(device)
 
 
 # In[38]:
@@ -160,4 +160,4 @@ model_trained = train_model(model, criterion, optimizer, num_epochs=100)
 # In[ ]:
 
 
-torch.save(model_trained.state_dict(), 'models/pytorch/weights.h5')
+torch.save(model_trained.state_dict(), 'models/pytorch/weights2.h5')

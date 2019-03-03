@@ -55,11 +55,11 @@ def meets_threshold(style_dict, count_dict, filename):
 style_dict, count_dict = makeFileNameAndStylePairs()
 
 files_to_delete = []
-for filename in os.listdir("data/test"):
+for filename in os.listdir("data/train"):
     if filename.endswith(".jpg"):
         if not meets_threshold(style_dict, count_dict, filename):
             files_to_delete.append(filename)
 
 for filename in files_to_delete:
-    filepath = "data/test/" + filename
+    filepath = "data/train/" + filename
     os.remove(filepath)
