@@ -1,4 +1,4 @@
-import cv2
+
 import os
 import math
 
@@ -55,6 +55,21 @@ def makeFileNameAndStylePairs():
 
     return dict
 
-seperate_images_by_class(TRAIN_PATH)
-seperate_images_by_class(VAL_PATH)
-seperate_images_by_class(TEST_PATH)
+def get_validation_images():
+    labels_dict = makeFileNameAndStylePairs()
+    validation_file_names = []
+    validation_file_labels = []
+
+
+    for root, dirs, files in os.walk("data/validation"):
+        for directory in dirs:
+            for subroot, subdirs, subfiles in os.walk(directory):
+                if subfile == ".DS_Store": continue
+                validation_file_names.append(os.path.join(subroot, subdir, subfile))
+                validation_file_labels.append(labels_dict[subfile])
+    print(validation_file_labels)
+#seperate_images_by_class(TRAIN_PATH)
+#seperate_images_by_class(VAL_PATH)
+#seperate_images_by_class(TEST_PATH)
+
+get_validation_images()
