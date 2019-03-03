@@ -99,7 +99,7 @@ validation_file_names, y_labels = get_validation_images()
 
 validation_img_paths = validation_file_names
 
-batch_size = 100
+batch_size = 10
 y_pred = []
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
