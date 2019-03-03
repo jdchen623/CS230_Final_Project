@@ -21,6 +21,45 @@ import torch.nn as nn
 from torch.nn import functional as F
 import torch.optim as optim
 
+normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                                                  std=[0.229, 0.224, 0.225])
+
+data_transforms = {
+        'train':
+        transforms.Compose([
+                    transforms.Resize((224,224)),
+                    transforms.RandomAffine(0, shear=10, scale=(0.8,1.2)),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.ToTensor(),
+                    normalize
+                ]),
+        'validation':
+        transforms.Compose([
+                    transforms.Resize((224,224)),
+                    transforms.ToTensor(),
+                    normalize
+                ]),
+    }
+
+image_datasets = {
+        'train':
+        datasets.ImageFolder('data/train', data_transforms['train']),
+        'validation':
+        datasets.ImageFolder('data/validation', data_transforms['validation'])
+    }
+
+dataloaders = {
+        'train':
+        torch.utils.data.DataLoader(image_datasets['train'],
+                                                                    batch_size=32,
+                                                                    shuffle=True, num_workers=4),
+        'validation':
+        torch.utils.data.DataLoader(image_datasets['validation'],
+                                                                    batch_size=32,
+                                                                    shuffle=False, num_workers=4)
+    }
+
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 model = models.resnet50(pretrained=False).to(device)
