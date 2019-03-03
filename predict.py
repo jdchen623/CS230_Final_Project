@@ -28,7 +28,7 @@ model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 33)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights.h5')
+model.load_state_dict(torch.load('models/pytorch/weights.h5'))
 
 
 # ### 6. Make predictions on sample test images
