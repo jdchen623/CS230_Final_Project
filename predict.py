@@ -99,23 +99,26 @@ validation_file_names, y_labels = get_validation_images()
 
 validation_img_paths = validation_file_names
 
+batch_size = 100
+y_pred = []
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
+for i in range(0, len(img_list)/ batch_size):
+    img_batch = img_list[i * batch_size : (i + 1) * batch_size]
+# In[ ]:
+    validation_batch = torch.stack([data_transforms['validation'](img).to(device)
+                                for img in img_batch])
+    pred_logits_tensor = model(validation_batch)
+    pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
+    pred_index = np.argmax(pred_probs, axis = 1)
+    y_pred.extends(pred_index)
 
 # In[ ]:
 
 
-validation_batch = torch.stack([data_transforms['validation'](img).to(device)
-                                for img in img_list])
 
 
-# In[ ]:
-
-
-pred_logits_tensor = model(validation_batch)
-pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
-pred_index = np.argmax(pred_probs, axis = 1)
-results = sklearn.metrics.precision_recall_fscore_support(y_labels, pred_index, average = weighted)
+results = sklearn.metrics.precision_recall_fscore_support(y_labels, y_pred, average = weighted)
 print(results)
 print(results, file = open("results/precision_recall"))
 

@@ -67,7 +67,7 @@ def get_validation_images():
                 if subfile == ".DS_Store": continue
                 validation_file_names.append(os.path.join(subroot, subdir, subfile))
                 validation_file_labels.append(labels_dict[subfile])
-    print(validation_file_labels)
+    # print(validation_file_labels)
 #seperate_images_by_class(TRAIN_PATH)
 #seperate_images_by_class(VAL_PATH)
 #seperate_images_by_class(TEST_PATH)
