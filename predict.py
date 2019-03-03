@@ -15,6 +15,7 @@ import torch
 from torchvision import datasets, models, transforms
 import torch.nn as nn
 from torch.nn import functional as F
+
 from sklearn.metrics import precision_recall_fscore_support
 import torch.optim as optim
 import os
@@ -119,7 +120,7 @@ for i in range(0, int(len(img_list)/ batch_size)):
 
 
 
-results = sklearn.metrics.precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
+results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 print(results)
 print(results, file = open("results/precision_recall"))
 
