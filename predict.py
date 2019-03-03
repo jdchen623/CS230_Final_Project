@@ -88,8 +88,10 @@ validation_batch = torch.stack([data_transforms['validation'](img).to(device)
 
 pred_logits_tensor = model(validation_batch)
 pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
-pred_index = pred_probs.index(max(pred_probs))
+pred_index = np.argmax(pred_probs)
 print(pred_index)
+print(pred_index.size)
+
 
 # In[ ]:
 
