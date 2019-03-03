@@ -105,6 +105,10 @@ batch_size = 10
 y_pred = []
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
+remaining_img_batch = len(img_list)%batch_size
+img_batch = img_list[len(img_list) - remaining_img_batch::]
+print(len(img_batch))
+
 for i in range(0, int(len(img_list)/ batch_size)):
     img_batch = img_list[i * batch_size : (i + 1) * batch_size]
 # In[ ]:
@@ -114,6 +118,8 @@ for i in range(0, int(len(img_list)/ batch_size)):
     pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
     pred_index = np.argmax(pred_probs, axis = 1)
     y_pred.extend(pred_index)
+
+#edge case for total samples
 
 # In[ ]:
 
