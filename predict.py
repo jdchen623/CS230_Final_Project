@@ -119,7 +119,7 @@ for i in range(0, int(len(img_list)/ batch_size)):
 
 
 
-results = sklearn.metrics.precision_recall_fscore_support(y_labels, y_pred, average = weighted)
+results = sklearn.metrics.precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 print(results)
 print(results, file = open("results/precision_recall"))
 
