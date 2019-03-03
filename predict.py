@@ -112,17 +112,22 @@ def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
     validation_file_names = []
     validation_file_labels = []
+    validation_file_numeric_labels = []
 
     for root, dirs, files in os.walk("data/validation"):
+        dir_index = 0
         for directory in dirs:
             directory_path = os.path.join(root, directory)
-
             for subroot, subdir, subfiles in os.walk(directory_path):
                 for subfile in subfiles:
                     if subfile == ".DS_Store": continue
                     file_path = os.path.join(subroot, subfile)
-                    img_label = labels_dict[subfile]
-                    if type(img_label) is not str: continue
+                    if subfile == ".DS_Store": continue
                     validation_file_names.append(os.path.join(subroot, subfile))
                     validation_file_labels.append(labels_dict[subfile])
-    return validation_file_names, validation_file_labels
+                    validation_file_numeric_labels.append(dir_index)
+            dir_index += 1
+    return validation_file_names, validation_file_numeric_labels
+
+    
+        
