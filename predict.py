@@ -93,13 +93,13 @@ print(pred_probs)
 # In[ ]:
 
 
-fig, axs = plt.subplots(1, len(img_list), figsize=(20, 5))
-for i, img in enumerate(img_list):
-    ax = axs[i]
-    ax.axis('off')
-    ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
-                                                          100*pred_probs[i,1]))
-    ax.imshow(img)
+# fig, axs = plt.subplots(1, len(img_list), figsize=(20, 5))
+# for i, img in enumerate(img_list):
+#     ax = axs[i]
+#     ax.axis('off')
+#     ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
+#                                                           100*pred_probs[i,1]))
+#     ax.imshow(img)
 
 
 
