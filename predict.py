@@ -17,6 +17,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import confusion_matrix
 import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
@@ -101,9 +102,10 @@ validation_file_names, y_labels = get_validation_images()
 validation_img_paths = validation_file_names
 
 batch_size = 10
+number_batches
 y_pred = []
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
-
+print(len(img_list))
 for i in range(0, int(len(img_list)/ batch_size)):
     img_batch = img_list[i * batch_size : (i + 1) * batch_size]
 # In[ ]:
@@ -127,8 +129,11 @@ y_pred.extend(pred_index)
 
 
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
+conf_mat = confusion_matrix(y_labels, y_pred)
 print(results)
 print(results, file = open("results/precision_recall2.txt", 'w'))
+print(conf_mat)
+print(conf_mat, file = open("results/confusion_matrix.txt", 'w'))
 
 
 
