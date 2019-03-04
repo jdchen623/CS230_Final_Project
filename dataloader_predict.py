@@ -80,14 +80,15 @@ for inputs, labels in dataloaders["validation"]:
     labels = labels.to(device)
 
     outputs = model(inputs)
-    loss = criterion(outputs, labels)
-
     _, preds = torch.max(outputs, 1)
     y_pred.extend(preds)
     y_true.extend(labels)
     running_corrects += torch.sum(preds == labels.data)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 11dbd1083dee9650546beb9408f0470d9eba3b08
 acc = running_corrects.float() / len(image_datasets["validation"])
 print("accuracy: ", acc)
 results = precision_recall_fscore_support(y_true, y_pred, average = "weighted")
