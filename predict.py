@@ -152,7 +152,7 @@ import matplotlib.pyplot as plt
 array = conf_mat
 df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
                                        columns = [i for i in "ABCDEFGHIJKLMNOPQRSTU"])
-plt.figure(figsize = (30, 30))
+plt.figure(figsize = (20, 10))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
 fig.savefig("results/output.png")
