@@ -70,3 +70,23 @@ model.fc = nn.Sequential(
                nn.Linear(128, 21)).to(device)
 model.load_state_dict(torch.load('models/pytorch/weights2.h5'))
 model.eval()
+
+running_corrects = 0
+y_pred = []
+y_true = []
+
+for inputs, labels in dataloaders["validation"]:
+    inputs = inputs.to(device)
+    labels = labels.to(device)
+
+    outputs = model(inputs)
+    loss = criterion(outputs, labels)
+
+    _, preds = torch.max(outputs, 1)
+    y_pred.extend(preds)
+    y_true.extend(labels)
+    running_corrects += torch.sum(preds == labels.data)
+acc = running_corrects.float() / len(image_datasets[phase])
+print("accuracy: ", acc)
+results = precision_recall_fscore_support(y_true, y_pred, average = "weighted")
+print("precision and recall: ", results)
