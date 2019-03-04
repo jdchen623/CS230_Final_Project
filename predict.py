@@ -22,7 +22,7 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-def get_validation_images(labels):
+def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
     validation_file_names = []
     validation_file_labels = []
@@ -150,8 +150,8 @@ import seaborn as sn
 import pandas as pd
 import matplotlib.pyplot as plt
 array = conf_mat
-df_cm = pd.DataFrame(array, index = [i for i in label_names],
-                                       columns = [i for i in label_names])
+df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
+                                       columns = [i for i in "ABCDEFGHIJKLMNOPQRSTU"])
 plt.figure(figsize = (30, 30))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
