@@ -105,12 +105,9 @@ batch_size = 10
 number_batches
 y_pred = []
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
-<<<<<<< HEAD
-print(len(img_list))
-=======
+
 num_images = len(img_list)
 
->>>>>>> bfc245980e6cc5846ef3ea036c2779af138c3a29
 for i in range(0, int(len(img_list)/ batch_size)):
     img_batch = img_list[i * batch_size : (i + 1) * batch_size]
 # In[ ]:
