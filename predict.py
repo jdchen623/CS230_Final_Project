@@ -22,7 +22,7 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-def get_validation_images():
+def get_validation_images(labels):
     labels_dict = makeFileNameAndStylePairs()
     validation_file_names = []
     validation_file_labels = []
@@ -30,6 +30,7 @@ def get_validation_images():
 
     for root, dirs, files in os.walk("data/validation"):
         dir_index = 0
+        labels = sorted(dirs)
         for directory in sorted(dirs):
             directory_path = os.path.join(root, directory)
             for subroot, subdir, subfiles in os.walk(directory_path):
@@ -41,7 +42,7 @@ def get_validation_images():
                     validation_file_labels.append(labels_dict[subfile])
                     validation_file_numeric_labels.append(dir_index)
             dir_index += 1
-    return validation_file_names, validation_file_numeric_labels
+    return validation_file_names, validation_file_numeric_labels, labels
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                                   std=[0.229, 0.224, 0.225])
@@ -97,7 +98,7 @@ model.load_state_dict(torch.load('models/pytorch/weights2.h5'))
 
 # In[ ]:
 
-validation_file_names, y_labels = get_validation_images()
+validation_file_names, y_labels, label_names = get_validation_images()
 
 validation_img_paths = validation_file_names
 
@@ -149,9 +150,9 @@ import seaborn as sn
 import pandas as pd
 import matplotlib.pyplot as plt
 array = conf_mat
-df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
-                                       columns = [i for i in "ABCDEFGHIJKLMNOPQRSTU"])
-plt.figure(figsize = (10,7))
+df_cm = pd.DataFrame(array, index = [i for i in label_names],
+                                       columns = [i for i in label_names])
+plt.figure(figsize = (30, 30))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
 fig.savefig("results/output.png")
