@@ -88,7 +88,7 @@ model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 21)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights.h5'))
+model.load_state_dict(torch.load('models/pytorch/weights2.h5'))
 
 
 
@@ -128,7 +128,7 @@ y_pred.extend(pred_index)
 
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 print(results)
-print(results, file = open("results/precision_recall.txt", 'w'))
+print(results, file = open("results/precision_recall2.txt", 'w'))
 
 
 
