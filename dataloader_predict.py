@@ -86,7 +86,25 @@ for inputs, labels in dataloaders["validation"]:
     y_pred.extend(preds)
     y_true.extend(labels)
     running_corrects += torch.sum(preds == labels.data)
-acc = running_corrects.float() / len(image_datasets[phase])
+
+
+acc = running_corrects.float() / len(image_datasets["validation"])
 print("accuracy: ", acc)
 results = precision_recall_fscore_support(y_true, y_pred, average = "weighted")
-print("precision and recall: ", results)
+conf_mat = confusion_matrix(y_true, y_pred)
+print(results)
+print(results, file = open("results/precision_recall2.txt", 'w'))
+print(conf_mat)
+print(conf_mat, file = open("results/confusion_matrix.txt", 'w'))
+
+
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
+array = conf_mat
+df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
+                                       columns = [i for i in "ABCDEFGHIJKLMNOPQRSTU"])
+plt.figure(figsize = (20, 10))
+sn_plot = sn.heatmap(df_cm, annot=True)
+fig = sn_plot.get_figure()
+fig.savefig("results/output.png")
