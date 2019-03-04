@@ -145,6 +145,17 @@ print(results, file = open("results/precision_recall2.txt", 'w'))
 print(conf_mat)
 print(conf_mat, file = open("results/confusion_matrix.txt", 'w'))
 
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
+array = conf_mat
+df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
+                                       columns = [i for i in "ABCDEFGHIJKLMNOPQRSTU"])
+plt.figure(figsize = (10,7))
+sn_plot = sn.heatmap(df_cm, annot=True)
+fig = sn_plot.get_figure()
+fig.savefig("results/output.png")
+
 
 
 
