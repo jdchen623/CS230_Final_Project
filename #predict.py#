@@ -30,7 +30,8 @@ def get_validation_images():
 
     for root, dirs, files in os.walk("data/validation"):
         dir_index = 0
-        for directory in sorted(dirs):
+        print(sorted(dirs))
+        for directory in dirs:
             directory_path = os.path.join(root, directory)
             for subroot, subdir, subfiles in os.walk(directory_path):
                 for subfile in subfiles:
@@ -102,6 +103,7 @@ validation_file_names, y_labels = get_validation_images()
 validation_img_paths = validation_file_names
 
 batch_size = 10
+num_images = len(validation_image_paths)
 y_pred = []
 img_list = [Image.open(img_path) for img_path in validation_img_paths]
 
