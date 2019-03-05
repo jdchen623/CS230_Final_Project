@@ -22,6 +22,8 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
+NUM_CLASSES = 10
+
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
     validation_file_names = []
@@ -89,7 +91,7 @@ model = models.resnet50(pretrained=False).to(device)
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
-               nn.Linear(128, 21)).to(device)
+               nn.Linear(128, NUM_CLASSES)).to(device)
 model.load_state_dict(torch.load('models/pytorch/weights2.h5'))
 model.eval()
 
