@@ -91,7 +91,7 @@ for param in model.parameters():
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
-               nn.Linear(128, 21)).to(device)
+               nn.Linear(128, 10)).to(device)
 
 
 # In[38]:
