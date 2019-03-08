@@ -18,6 +18,7 @@ from torch.nn import functional as F
 
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
@@ -145,6 +146,9 @@ print(results)
 print(results, file = open("results/precision_recall_resnet50_10_layers.txt", 'w'))
 print(conf_mat)
 print(conf_mat, file = open("results/confusion_matrix_resnet50_10_layers.txt", 'w'))
+print(classification_report(y_labels, y_pred, label_names))
+print(classification_report(y_labels, y_pred, label_names), open("results/classification_report_resnet50_10_labels"))
+
 
 import seaborn as sn
 import pandas as pd
@@ -156,6 +160,8 @@ plt.figure(figsize = (20, 10))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
 fig.savefig("results/output_resnet50_10_layers.png")
+
+
 
 
 
