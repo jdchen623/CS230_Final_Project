@@ -90,7 +90,7 @@ model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 10)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights2.h5'))
+model.load_state_dict(torch.load('models/pytorch/weights3_resnet50_10_classes.h5'))
 model.eval()
 
 
@@ -142,9 +142,9 @@ print("Percentage: " + str(float(count)/len(y_pred)))
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 conf_mat = confusion_matrix(y_labels, y_pred)
 print(results)
-print(results, file = open("results/precision_recall2.txt", 'w'))
+print(results, file = open("results/precision_recall_resnet50_10_layers.txt", 'w'))
 print(conf_mat)
-print(conf_mat, file = open("results/confusion_matrix.txt", 'w'))
+print(conf_mat, file = open("results/confusion_matrix_resnet50_10_layers.txt", 'w'))
 
 import seaborn as sn
 import pandas as pd
@@ -155,7 +155,7 @@ df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
 plt.figure(figsize = (20, 10))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
-fig.savefig("results/output.png")
+fig.savefig("results/output_resnet50_10_layers.png")
 
 
 
