@@ -146,8 +146,8 @@ print(results)
 print(results, file = open("results/precision_recall_resnet50_10_layers.txt", 'w'))
 print(conf_mat)
 print(conf_mat, file = open("results/confusion_matrix_resnet50_10_layers.txt", 'w'))
-print(classification_report(y_labels, y_pred, label_names))
-print(classification_report(y_labels, y_pred, label_names), open("results/classification_report_resnet50_10_labels"))
+print(classification_report(y_labels, y_pred))
+print(classification_report(y_labels, y_pred), open("results/classification_report_resnet50_10_labels"))
 
 
 import seaborn as sn
