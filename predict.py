@@ -91,7 +91,7 @@ model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 10)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights3_resnet50_10_classes.h5'))
+model.load_state_dict(torch.load('models/pytorch/weights4_data_aug.h5'))
 model.eval()
 
 
@@ -143,11 +143,11 @@ print("Percentage: " + str(float(count)/len(y_pred)))
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 conf_mat = confusion_matrix(y_labels, y_pred)
 print(results)
-print(results, file = open("results/precision_recall_resnet50_10_layers.txt", 'w'))
+print(results, file = open("results/precision_recall4_resnet50_data_aug.txt", 'w'))
 print(conf_mat)
-print(conf_mat, file = open("results/confusion_matrix_resnet50_10_layers.txt", 'w'))
+print(conf_mat, file = open("results/confusion_matrix4_resnet50_data_aug.txt", 'w'))
 print(classification_report(y_labels, y_pred))
-print(classification_report(y_labels, y_pred), file = open("results/classification_report_resnet50_10_labels.txt", 'w'))
+print(classification_report(y_labels, y_pred), file = open("results/classification_report4_resnet50_data_aug.txt", 'w'))
 
 
 import seaborn as sn

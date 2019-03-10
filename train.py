@@ -145,7 +145,7 @@ def train_model(model, criterion, optimizer, num_epochs=15):
 
             print('{} loss: {:.4f}, acc: {:.4f}'.format(phase,
                                                         epoch_loss.item(),
-                                                        epoch_acc.item()), file=open("results/results.txt", "a"))
+                                                        epoch_acc.item()), file=open("results/results4.txt", "a"))
     return model
 
 
@@ -160,4 +160,4 @@ model_trained = train_model(model, criterion, optimizer, num_epochs=100)
 # In[ ]:
 
 
-torch.save(model_trained.state_dict(), 'models/pytorch/weights2.h5')
+torch.save(model_trained.state_dict(), 'models/pytorch/weights4_data_aug.h5')
