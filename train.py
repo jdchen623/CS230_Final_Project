@@ -31,7 +31,7 @@ torch.__version__
 # ### 2. Create PyTorch data generators
 
 # In[35]:
-
+WEIGHTS_PATH = 'models/pytorch/weights5_data_aug_max.h5'
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                  std=[0.229, 0.224, 0.225])
@@ -160,4 +160,4 @@ model_trained = train_model(model, criterion, optimizer, num_epochs=100)
 # In[ ]:
 
 
-torch.save(model_trained.state_dict(), 'models/pytorch/weights4_data_aug.h5')
+torch.save(model_trained.state_dict(), WEIGHTS_PATH)
