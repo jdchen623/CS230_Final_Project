@@ -23,6 +23,12 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
+WEIGHTS_PATH = "models/pytorch/weights3_resnet50_10_classes.h5"
+PRECISION_RECALL_PATH = ""
+CONFUSION_MATRIX_PLOT_PATH = ""
+CLASSIFICATION_REPORT_PATH = ""
+CONFUSION_MATRIX_PLOT_PATH = "results/output_resnet50_10_layers.png"
+
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
     validation_file_names = []
@@ -43,6 +49,7 @@ def get_validation_images():
                     validation_file_labels.append(labels_dict[subfile])
                     validation_file_numeric_labels.append(dir_index)
             dir_index += 1
+        break
     return validation_file_names, validation_file_numeric_labels, labels
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -91,7 +98,7 @@ model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 10)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights4_data_aug.h5'))
+model.load_state_dict(torch.load(WEIGHTS_PATH))
 model.eval()
 
 
@@ -142,24 +149,27 @@ print("Percentage: " + str(float(count)/len(y_pred)))
 
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 conf_mat = confusion_matrix(y_labels, y_pred)
-print(results)
-print(results, file = open("results/precision_recall4_resnet50_data_aug.txt", 'w'))
-print(conf_mat)
-print(conf_mat, file = open("results/confusion_matrix4_resnet50_data_aug.txt", 'w'))
-print(classification_report(y_labels, y_pred))
-print(classification_report(y_labels, y_pred), file = open("results/classification_report4_resnet50_data_aug.txt", 'w'))
+#print(results)
+#print(results, file = open(PRECISION_RECALL_PATH, 'w'))
+#print(conf_mat)
+#print(conf_mat, file = open("results/CONFUSION_MATRIX_PATH, 'w'))
+#print(classification_report(y_labels, y_pred))
+#print(classification_report(y_labels, y_pred), file = open(CLASSICATION_REPORT_PATH, 'w'))
 
 
 import seaborn as sn
 import pandas as pd
 import matplotlib.pyplot as plt
 array = conf_mat
-df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJ"],
-                                       columns = [i for i in "ABCDEFGHIJ"])
+
+
+
+df_cm = pd.DataFrame(array, index = [i for i in label_names],
+                                       columns = [i for i in label_names])
 plt.figure(figsize = (20, 10))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
-fig.savefig("results/output_resnet50_10_layers.png")
+fig.savefig(CONFUSION_MATRIX_PLOT_PATH)
 
 
 
