@@ -2,8 +2,8 @@ from PIL import Image
 import os
 from random import *
 
-IMAGE_DIR = 'data/train/Symbolism/'
-FINAL_NUM_IMAGES = 5000
+IMAGE_DIR = 'data/train/Rococo/'
+FINAL_NUM_IMAGES = 8220
 
 image_count = 0
 for original_image in os.listdir(IMAGE_DIR):
@@ -37,4 +37,27 @@ for original_image in os.listdir(IMAGE_DIR):
     print('Saving rotated ' + image_name + ' ' + str(added_images))
     image_rot_90.save(image_name)
     added_images += 1
+    if added_images == num_images_to_add:
+        print('Added ' + str(added_images))
+        break
+                        
     
+    image_rot_180 = image.rotate(180)
+    image_name = IMAGE_DIR + original_image + '_rot180'
+    image_name = image_name.replace('.jpg', '')
+    image_name += '.jpg'
+    print('Saving rotated ' + image_name + ' ' + str(added_images))
+    image_rot_180.save(image_name)
+    added_images += 1
+    if added_images == num_images_to_add:
+        print('Added ' + str(added_images))
+        break
+                        
+
+    image_rot_270 = image.rotate(270)
+    image_name = IMAGE_DIR + original_image + '_rot270'
+    image_name = image_name.replace('.jpg', '')
+    image_name += '.jpg'
+    print('Saving rotated ' + image_name + ' ' + str(added_images))
+    image_rot_270.save(image_name)
+    added_images += 1
