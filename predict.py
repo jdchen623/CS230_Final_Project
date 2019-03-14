@@ -23,11 +23,11 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-WEIGHTS_PATH = "models/pytorch/weights3_resnet50_10_classes.h5"
-PRECISION_RECALL_PATH = ""
-CONFUSION_MATRIX_PLOT_PATH = ""
-CLASSIFICATION_REPORT_PATH = ""
-CONFUSION_MATRIX_PLOT_PATH = "results/output_resnet50_10_layers.png"
+WEIGHTS_PATH = "models/pytorch/weights5_data_aug_max.h5"
+PRECISION_RECALL_PATH = "results/precision_recall_data_aug_max.txt"
+CONFUSION_MATRIX_PATH = "results/confusion_matrix_data_aug_max.txt"
+CLASSIFICATION_REPORT_PATH = "results/classification_report_data_aug_max"
+CONFUSION_MATRIX_PLOT_PATH = "results/output_data_aug.png"
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
@@ -149,12 +149,12 @@ print("Percentage: " + str(float(count)/len(y_pred)))
 
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 conf_mat = confusion_matrix(y_labels, y_pred)
-#print(results)
-#print(results, file = open(PRECISION_RECALL_PATH, 'w'))
-#print(conf_mat)
-#print(conf_mat, file = open("results/CONFUSION_MATRIX_PATH, 'w'))
-#print(classification_report(y_labels, y_pred))
-#print(classification_report(y_labels, y_pred), file = open(CLASSICATION_REPORT_PATH, 'w'))
+print(results)
+print(results, file = open(PRECISION_RECALL_PATH, 'w'))
+print(conf_mat)
+print(conf_mat, file = open(CONFUSION_MATRIX_PATH, 'w'))
+print(classification_report(y_labels, y_pred))
+print(classification_report(y_labels, y_pred), file = open(CLASSIFICATION_REPORT_PATH, 'w'))
 
 
 import seaborn as sn
