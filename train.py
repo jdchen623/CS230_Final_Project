@@ -31,7 +31,7 @@ torch.__version__
 # ### 2. Create PyTorch data generators
 
 # In[35]:
-WEIGHTS_PATH = 'models/pytorch/testing.h5'
+WEIGHTS_PATH = 'models/pytorch/weights6_frozen_layers.h5'
 num_frozen = 161 - 20
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -91,6 +91,8 @@ for param in model.parameters():
     if layer_index < num_frozen:
         param.requires_grad = False
         layer_index += 1
+    else:
+        print("not frozen")
 
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
