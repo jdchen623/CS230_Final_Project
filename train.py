@@ -91,8 +91,6 @@ for param in model.parameters():
     if layer_index < num_frozen:
         param.requires_grad = False
         layer_index += 1
-    else:
-        print("not frozen")
 
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
@@ -151,7 +149,7 @@ def train_model(model, criterion, optimizer, num_epochs=15):
 
             print('{} loss: {:.4f}, acc: {:.4f}'.format(phase,
                                                         epoch_loss.item(),
-                                                        epoch_acc.item()), file=open("results/results4.txt", "a"))
+                                                        epoch_acc.item()), file=open("results/results6.txt", "a"))
     return model
 
 
