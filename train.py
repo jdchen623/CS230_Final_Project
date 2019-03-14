@@ -159,8 +159,7 @@ def train_model(model, criterion, optimizer, num_epochs=15):
             print('epoch: {}, {} loss: {:.4f}, acc: {:.4f}'.format(epoch+1, phase,
                                                         epoch_loss.item(),
                                                         epoch_acc.item()), file=open("results/results7.txt", "a"))
-
-            torch.save(model_trained.state_dict(), os.path.join(WEIGHTS_PATH, WEIGHTS_FILE_NAME + "_epoch" + int(epoch + 1))
+            torch.save(model.state_dict(), os.path.join(WEIGHTS_PATH, WEIGHTS_FILE_NAME + "_epoch" + int(epoch + 1))
 
     return model
 
