@@ -10,6 +10,7 @@ import numpy as np
 # get_ipython().magic(u'matplotlib inline')
 import matplotlib.pyplot as plt
 from PIL import Image
+import os
 
 
 # In[33]:
@@ -31,8 +32,17 @@ torch.__version__
 # ### 2. Create PyTorch data generators
 
 # In[35]:
-WEIGHTS_PATH = 'models/pytorch/weights6_frozen_layers.h5'
-num_frozen = 161 - 20
+WEIGHTS_FILE_NAME = 'weights7_reduced_layers'
+WEIGHTS_DIR = "models/pytorch"
+WEIGHTS_PATH = os.path.join(WEIGHTS_DIR, WEIGHTS_FILE_NAME)
+NUM_FROZEN = 161 - 10
+
+try:
+    os.makedir(WEIGHTS_PATH)
+except OSError:
+    print ("Creation of the directory %s failed" % WEIGHTS_PATH)
+else:
+    print ("Successfully created the directory %s " % WEIGHTS_PATH)
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                  std=[0.229, 0.224, 0.225])
@@ -88,7 +98,7 @@ model = models.resnet50(pretrained=True).to(device)
 
 layer_index = 0
 for param in model.parameters():
-    if layer_index < num_frozen:
+    if layer_index < NUM_FROZEN:
         param.requires_grad = False
         layer_index += 1
 
@@ -108,7 +118,6 @@ optimizer = optim.Adam(filter(lambda p: p.requires_grad,model.parameters()))
 # ### 4. Train the model
 
 # In[39]:
-
 
 def train_model(model, criterion, optimizer, num_epochs=15):
     for epoch in range(num_epochs):
@@ -149,7 +158,10 @@ def train_model(model, criterion, optimizer, num_epochs=15):
 
             print('epoch: {}, {} loss: {:.4f}, acc: {:.4f}'.format(epoch+1, phase,
                                                         epoch_loss.item(),
-                                                        epoch_acc.item()), file=open("results/results6.txt", "a"))
+                                                        epoch_acc.item()), file=open("results/results7.txt", "a"))
+
+            torch.save(model_trained.state_dict(), os.path.join(WEIGHTS_PATH, WEIGHTS_FILE_NAME + "_epoch" + int(epoch + 1))
+
     return model
 
 
