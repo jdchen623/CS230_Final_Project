@@ -84,14 +84,13 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 model = models.resnet50(pretrained=True).to(device)
+
 for param in model.parameters():
     param.requires_grad = False
     #count +=1
 
 count2 = 0
-for child in model.children():
-    for param in child.parameters():
-        count2+=1
+for c
 
 print("count: " + str(count2))
 
