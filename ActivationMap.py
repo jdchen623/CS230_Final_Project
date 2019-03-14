@@ -75,7 +75,7 @@ overlay = getCAM(activated_features.features, weight_softmax, class_idx )
 # imshow(display_transform(image))
 # imshow(skimage.transform.resize(overlay[0], tensor.shape[1:3]), alpha=0.5, cmap='jet');
 
-imshow(overlay[0],alpha=0.5 cmap='jet')
+imshow(overlay[0],alpha=0.5, cmap='jet')
 imshow(display_transform(image))
 #imsave('heatmap2', image)
 #alpha = 0.5 removed from next line
