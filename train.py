@@ -31,7 +31,7 @@ torch.__version__
 # ### 2. Create PyTorch data generators
 
 # In[35]:
-WEIGHTS_PATH = 'models/pytorch/weights5_data_aug_max.h5'
+WEIGHTS_PATH = 'models/pytorch/testing.h5'
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                  std=[0.229, 0.224, 0.225])
@@ -84,9 +84,9 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 model = models.resnet50(pretrained=True).to(device)
-
 for param in model.parameters():
     param.requires_grad = False
+    count +=1
 
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),

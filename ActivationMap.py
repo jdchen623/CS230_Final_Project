@@ -8,6 +8,7 @@ from torch.nn import functional as F
 from torch import topk
 import numpy as np
 import skimage.transform
+import torch
 
 image = Image.open("data/validation/Baroque/63.jpg")
 imshow(image)
@@ -34,6 +35,8 @@ display_transform = transforms.Compose([
 tensor = preprocess(image)
 prediction_var = Variable((tensor.unsqueeze(0)).cuda(), requires_grad=True)
 # model = models.resnet18(pretrained=True)
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 model = models.resnet50(pretrained=False).to(device)
 model.cuda()
 model.eval()
