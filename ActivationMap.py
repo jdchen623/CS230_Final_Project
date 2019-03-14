@@ -21,7 +21,7 @@ for subdir, dirs, files in os.walk(DIR_PATH):
     for file in files:
         image_path = os.path.join(subdir, file)
         if imghdr.what(image_path) == "jpeg":
-            print(imghdr.what(image_path))
+            print("creating heatmaps for image %s of %s images: " % (files.index(file), len(files)))
             image = Image.open(image_path)
             imshow(image)
 
