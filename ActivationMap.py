@@ -11,73 +11,76 @@ from torch import topk
 import numpy as np
 import skimage.transform
 import torch
+import os
 
-image = Image.open("data/validation/Baroque/63.jpg")
-imshow(image)
+DIR_PATH = "data/validation"
+HEAT_MAP_PATH = "results/heatmaps"
 
-# Imagenet mean/std
+for subdir, dirs, files in os.walk(DIR_PATH):
+    for file in files:
+        image_path = os.path.join(subdir, file)
 
-normalize = transforms.Normalize(
-   mean=[0.485, 0.456, 0.406],
-   std=[0.229, 0.224, 0.225]
-)
+        image = Image.open(image_path)
+        imshow(image)
 
-# Preprocessing - scale to 224x224 for model, convert to tensor,
-# and normalize to -1..1 with mean/std for ImageNet
+        # Imagenet mean/std
 
-preprocess = transforms.Compose([
-   transforms.Resize((224,224)),
-   transforms.ToTensor(),
-   normalize
-])
+        normalize = transforms.Normalize(
+           mean=[0.485, 0.456, 0.406],
+           std=[0.229, 0.224, 0.225]
+        )
 
-display_transform = transforms.Compose([
-   transforms.Resize((224,224))])
+        # Preprocessing - scale to 224x224 for model, convert to tensor,
+        # and normalize to -1..1 with mean/std for ImageNet
 
-tensor = preprocess(image)
-prediction_var = Variable((tensor.unsqueeze(0)).cuda(), requires_grad=True)
-# model = models.resnet18(pretrained=True)
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        preprocess = transforms.Compose([
+           transforms.Resize((224,224)),
+           transforms.ToTensor(),
+           normalize
+        ])
 
-model = models.resnet50(pretrained=False).to(device)
-model.cuda()
-model.eval()
+        display_transform = transforms.Compose([
+           transforms.Resize((224,224))])
 
-class SaveFeatures():
-    features=None
-    def __init__(self, m): self.hook = m.register_forward_hook(self.hook_fn)
-    def hook_fn(self, module, input, output): self.features = ((output.cpu()).data).numpy()
-    def remove(self): self.hook.remove()
+        tensor = preprocess(image)
+        prediction_var = Variable((tensor.unsqueeze(0)).cuda(), requires_grad=True)
+        # model = models.resnet18(pretrained=True)
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-final_layer = model._modules.get('layer4')
-activated_features = SaveFeatures(final_layer)
+        model = models.resnet50(pretrained=False).to(device)
+        model.cuda()
+        model.eval()
 
-prediction = model(prediction_var)
-pred_probabilities = F.softmax(prediction).data.squeeze()
-activated_features.remove()
+        class SaveFeatures():
+            features=None
+            def __init__(self, m): self.hook = m.register_forward_hook(self.hook_fn)
+            def hook_fn(self, module, input, output): self.features = ((output.cpu()).data).numpy()
+            def remove(self): self.hook.remove()
 
-topk(pred_probabilities,1)
+        final_layer = model._modules.get('layer4')
+        activated_features = SaveFeatures(final_layer)
 
-def getCAM(feature_conv, weight_fc, class_idx):
-    _, nc, h, w = feature_conv.shape
-    cam = weight_fc[class_idx].dot(feature_conv.reshape((nc, h*w)))
-    cam = cam.reshape(h, w)
-    cam = cam - np.min(cam)
-    cam_img = cam / np.max(cam)
-    return [cam_img]
+        prediction = model(prediction_var)
+        pred_probabilities = F.softmax(prediction).data.squeeze()
+        activated_features.remove()
 
-weight_softmax_params = list(model._modules.get('fc').parameters())
-weight_softmax = np.squeeze(weight_softmax_params[0].cpu().data.numpy())
-weight_softmax_params
-class_idx = topk(pred_probabilities,1)[1].int()
-overlay = getCAM(activated_features.features, weight_softmax, class_idx )
-# imshow(overlay[0], alpha=0.5, cmap='jet')
-# imshow(display_transform(image))
-# imshow(skimage.transform.resize(overlay[0], tensor.shape[1:3]), alpha=0.5, cmap='jet');
+        topk(pred_probabilities,1)
 
-imshow(overlay[0],alpha=0.5, cmap='jet')
-imshow(display_transform(image))
-#imsave('heatmap2', image)
-#alpha = 0.5 removed from next line
-imshow(skimage.transform.resize(overlay[0], tensor.shape[1:3]),alpha=0.5, cmap='jet');
-savefig("heatmap")
+        def getCAM(feature_conv, weight_fc, class_idx):
+            _, nc, h, w = feature_conv.shape
+            cam = weight_fc[class_idx].dot(feature_conv.reshape((nc, h*w)))
+            cam = cam.reshape(h, w)
+            cam = cam - np.min(cam)
+            cam_img = cam / np.max(cam)
+            return [cam_img]
+
+        weight_softmax_params = list(model._modules.get('fc').parameters())
+        weight_softmax = np.squeeze(weight_softmax_params[0].cpu().data.numpy())
+        weight_softmax_params
+        class_idx = topk(pred_probabilities,1)[1].int()
+        overlay = getCAM(activated_features.features, weight_softmax, class_idx )
+        imshow(overlay[0],alpha=0.5, cmap='jet')
+        imshow(display_transform(image))
+        imshow(skimage.transform.resize(overlay[0], tensor.shape[1:3]),alpha=0.5, cmap='jet');
+        save_dir = os.path.join(HEAT_MAP_PATH, file)
+        savefig(save_dir)
