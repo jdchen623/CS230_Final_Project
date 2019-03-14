@@ -20,7 +20,8 @@ HEAT_MAP_PATH = "results/heatmaps"
 for subdir, dirs, files in os.walk(DIR_PATH):
     for file in files:
         image_path = os.path.join(subdir, file)
-        if imghdr.what(image_path) == "jpg":
+        if imghdr.what(image_path) == "jpeg":
+            print(imghdr.what(image_path))
             image = Image.open(image_path)
             imshow(image)
 
