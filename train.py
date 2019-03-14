@@ -32,6 +32,7 @@ torch.__version__
 
 # In[35]:
 WEIGHTS_PATH = 'models/pytorch/testing.h5'
+num_frozen = 161 - 20
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                  std=[0.229, 0.224, 0.225])
@@ -84,16 +85,12 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
 model = models.resnet50(pretrained=True).to(device)
+
+layer_index = 0
 for param in model.parameters():
-    param.requires_grad = False
-    #count +=1
-
-count2 = 0
-for child in model.children():
-    for param in child.parameters():
-        count2+=1
-
-print("count: " + str(count2))
+    if layer_index < num_frozen:
+        param.requires_grad = False
+        layer_index += 1
 
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
@@ -105,8 +102,8 @@ model.fc = nn.Sequential(
 
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.fc.parameters())
-
+#optimizer = optim.Adam(model.fc.parameters())
+optimizer = optim.Adam(filter(lambda p: p.requires_grad,model.parameters()))
 
 # ### 4. Train the model
 
