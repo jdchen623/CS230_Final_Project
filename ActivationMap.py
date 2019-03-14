@@ -69,6 +69,10 @@ weight_softmax = np.squeeze(weight_softmax_params[0].cpu().data.numpy())
 weight_softmax_params
 class_idx = topk(pred_probabilities,1)[1].int()
 overlay = getCAM(activated_features.features, weight_softmax, class_idx )
-imshow(overlay[0], alpha=0.5, cmap='jet')
-imshow(display_transform(image))
-imshow(skimage.transform.resize(overlay[0], tensor.shape[1:3]), alpha=0.5, cmap='jet');
+# imshow(overlay[0], alpha=0.5, cmap='jet')
+# imshow(display_transform(image))
+# imshow(skimage.transform.resize(overlay[0], tensor.shape[1:3]), alpha=0.5, cmap='jet');
+
+imsave('heatmap1', overlay[0], alpha=0.5, cmap='jet')
+imsave('heatmap2', display_transform(image))
+imsave('heatmap3', skimage.transform.resize(overlay[0], tensor.shape[1:3]), alpha=0.5, cmap='jet');
