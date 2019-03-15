@@ -67,8 +67,8 @@ model = models.resnet50(pretrained=False).to(device)
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
-               nn.Linear(128, 21)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights2.h5'))
+               nn.Linear(128, 10)).to(device)
+model.load_state_dict(torch.load('models/pytorch/weights6_20_frozen_layers/weights6_20_frozen_layers_epoch15.h5'))
 model.eval()
 
 running_corrects = 0
@@ -90,18 +90,20 @@ print("accuracy: ", acc)
 results = precision_recall_fscore_support(y_true, y_pred, average = "weighted")
 conf_mat = confusion_matrix(y_true, y_pred)
 print(results)
-print(results, file = open("results/precision_recall2.txt", 'w'))
+#print(results, file = open("results/precision_recall2.txt", 'w'))
 print(conf_mat)
-print(conf_mat, file = open("results/confusion_matrix.txt", 'w'))
+#print(conf_mat, file = open("results/confusion_matrix.txt", 'w'))
 
 
 import seaborn as sn
 import pandas as pd
 import matplotlib.pyplot as plt
 array = conf_mat
+
+#Need to change this to have 10 classes, etc
 df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
                                        columns = [i for i in "ABCDEFGHIJKLMNOPQRSTU"])
 plt.figure(figsize = (20, 10))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
-fig.savefig("results/output.png")
+#fig.savefig("results/output.png")
