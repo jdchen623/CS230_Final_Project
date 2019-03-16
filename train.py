@@ -32,10 +32,13 @@ torch.__version__
 # ### 2. Create PyTorch data generators
 
 # In[35]:
-WEIGHTS_FILE_NAME = 'weights6_20_frozen_layers'
+WEIGHTS_FILE_NAME = 'weights8_20_frozen_layers_dropout'
 WEIGHTS_DIR = "models/pytorch"
 WEIGHTS_PATH = os.path.join(WEIGHTS_DIR, WEIGHTS_FILE_NAME)
 NUM_FROZEN = 161 - 20
+EPOCH_SAVE_FREQUENCY = 2
+NUM_EPOCHS = 50
+RESULTS_PATH = "results/results_20_layer_dropout.txt"
 
 try:
     os.mkdir(WEIGHTS_PATH)
@@ -158,8 +161,8 @@ def train_model(model, criterion, optimizer, num_epochs=15):
 
             print('epoch: {}, {} loss: {:.4f}, acc: {:.4f}'.format(epoch+1, phase,
                                                         epoch_loss.item(),
-                                                        epoch_acc.item()), file=open("results/results_20_layer.txt", "a"))
-            if (epoch + 1) % 5 == 0:
+                                                        epoch_acc.item()), file=open(RESULTS_PATH, "a"))
+            if (epoch + 1) % EPOCH_SAVE_FREQUENCY == 0:
                 torch.save(model.state_dict(), os.path.join(WEIGHTS_PATH, WEIGHTS_FILE_NAME + "_epoch" + str(epoch + 1) + ".h5"))
 
     return model
@@ -168,7 +171,7 @@ def train_model(model, criterion, optimizer, num_epochs=15):
 # In[ ]:
 
 
-model_trained = train_model(model, criterion, optimizer, num_epochs=20)
+model_trained = train_model(model, criterion, optimizer, num_epochs=NUM_EPOCHS)
 
 
 # ### 5. Save and load the model

@@ -20,7 +20,7 @@ from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import confusion_matrix
 import torch.optim as optim
 import os
-from preprocess import makeFileNameAndStylePairs
+#from preprocess import makeFileNameAndStylePairs
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                                   std=[0.229, 0.224, 0.225])
@@ -68,7 +68,7 @@ model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 10)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights6_20_frozen_layers/weights6_20_frozen_layers_epoch15.h5'))
+model.load_state_dict(torch.load('models/pytorch/weights7_15_frozen_layers/weights7_15_frozen_layers_epoch40.h5'))
 model.eval()
 
 running_corrects = 0
@@ -101,8 +101,8 @@ import matplotlib.pyplot as plt
 array = conf_mat
 
 #Need to change this to have 10 classes, etc
-df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJKLMNOPQRSTU"],
-                                       columns = [i for i in "ABCDEFGHIJKLMNOPQRSTU"])
+df_cm = pd.DataFrame(array, index = [i for i in "ABCDEFGHIJ"],
+                                       columns = [i for i in "ABCDEFGHIJ"])
 plt.figure(figsize = (20, 10))
 sn_plot = sn.heatmap(df_cm, annot=True)
 fig = sn_plot.get_figure()
