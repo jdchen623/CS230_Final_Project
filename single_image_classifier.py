@@ -28,6 +28,7 @@ PRECISION_RECALL_PATH = "results/precision_recall_data_aug_max.txt"
 CONFUSION_MATRIX_PATH = "results/confusion_matrix_data_aug_max.txt"
 CLASSIFICATION_REPORT_PATH = "results/classification_report_data_aug_max"
 CONFUSION_MATRIX_PLOT_PATH = "results/output_data_aug.png"
+IMAGE_PATH = "data/validation/baroque/63.jpg"
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
@@ -35,21 +36,10 @@ def get_validation_images():
     validation_file_labels = []
     validation_file_numeric_labels = []
 
-    for root, dirs, files in os.walk("data/validation/baroque/63.jpg"):
+    for root, dirs, files in os.walk("data/validation):
         dir_index = 0
         labels = sorted(dirs)
-        for directory in sorted(dirs):
-            directory_path = os.path.join(root, directory)
-            for subroot, subdir, subfiles in os.walk(directory_path):
-                for subfile in subfiles:
-                    if subfile == ".DS_Store": continue
-                    file_path = os.path.join(subroot, subfile)
-                    if subfile == ".DS_Store": continue
-                    validation_file_names.append(os.path.join(subroot, subfile))
-                    validation_file_labels.append(labels_dict[subfile])
-                    validation_file_numeric_labels.append(dir_index)
-            dir_index += 1
-        break
+    validation_file_names = [IMAGE_PATH]
     return validation_file_names, validation_file_numeric_labels, labels
 
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
