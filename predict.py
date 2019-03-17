@@ -143,46 +143,47 @@ count = 0
 for i in range(len(y_pred)):
     if y_pred[i] == y_labels[i]:
         count += 1
-
-print("Count: " + str(count))
-print("Percentage: " + str(float(count)/len(y_pred)))
-
-results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
-conf_mat = confusion_matrix(y_labels, y_pred)
-print(results)
-print(results, file = open(PRECISION_RECALL_PATH, 'w'))
-print(conf_mat)
-print(conf_mat, file = open(CONFUSION_MATRIX_PATH, 'w'))
-print(classification_report(y_labels, y_pred))
-print(classification_report(y_labels, y_pred), file = open(CLASSIFICATION_REPORT_PATH, 'w'))
-
-
-import seaborn as sn
-import pandas as pd
-import matplotlib.pyplot as plt
-array = conf_mat
-
-
-
-df_cm = pd.DataFrame(array, index = [i for i in label_names],
-                                       columns = [i for i in label_names])
-plt.figure(figsize = (20, 10))
-sn_plot = sn.heatmap(df_cm, annot=True)
-fig = sn_plot.get_figure()
-fig.savefig(CONFUSION_MATRIX_PLOT_PATH)
-
-
-
-
-
-
-# In[ ]:
-
-
-# fig, axs = plt.subplots(1, len(img_list), figsize=(20, 5))
-# for i, img in enumerate(img_list):
-#     ax = axs[i]
-#     ax.axis('off')
-#     ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
-#                                                           100*pred_probs[i,1]))
-#     ax.imshow(img)
+    if y_pred[i] != y_labels[i]:
+        print(validation_file_names[i] + " labeled as " + label_names[y_pred[i]])
+# print("Count: " + str(count))
+# print("Percentage: " + str(float(count)/len(y_pred)))
+#
+# results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
+# conf_mat = confusion_matrix(y_labels, y_pred)
+# print(results)
+# print(results, file = open(PRECISION_RECALL_PATH, 'w'))
+# print(conf_mat)
+# print(conf_mat, file = open(CONFUSION_MATRIX_PATH, 'w'))
+# print(classification_report(y_labels, y_pred))
+# print(classification_report(y_labels, y_pred), file = open(CLASSIFICATION_REPORT_PATH, 'w'))
+#
+#
+# import seaborn as sn
+# import pandas as pd
+# import matplotlib.pyplot as plt
+# array = conf_mat
+#
+#
+#
+# df_cm = pd.DataFrame(array, index = [i for i in label_names],
+#                                        columns = [i for i in label_names])
+# plt.figure(figsize = (20, 10))
+# sn_plot = sn.heatmap(df_cm, annot=True)
+# fig = sn_plot.get_figure()
+# fig.savefig(CONFUSION_MATRIX_PLOT_PATH)
+#
+#
+#
+#
+#
+#
+# # In[ ]:
+#
+#
+# # fig, axs = plt.subplots(1, len(img_list), figsize=(20, 5))
+# # for i, img in enumerate(img_list):
+# #     ax = axs[i]
+# #     ax.axis('off')
+# #     ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
+# #                                                           100*pred_probs[i,1]))
+# #     ax.imshow(img)
