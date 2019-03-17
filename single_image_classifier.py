@@ -28,7 +28,7 @@ PRECISION_RECALL_PATH = "results/precision_recall_data_aug_max.txt"
 CONFUSION_MATRIX_PATH = "results/confusion_matrix_data_aug_max.txt"
 CLASSIFICATION_REPORT_PATH = "results/classification_report_data_aug_max"
 CONFUSION_MATRIX_PLOT_PATH = "results/output_data_aug.png"
-IMAGE_PATH = "data/validation/baroque/63.jpg"
+IMAGE_PATH = "data/validation/Baroque/63.jpg"
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
@@ -36,9 +36,10 @@ def get_validation_images():
     validation_file_labels = []
     validation_file_numeric_labels = []
 
-    for root, dirs, files in os.walk("data/validation):
+    for root, dirs, files in os.walk("data/validation"):
         dir_index = 0
         labels = sorted(dirs)
+        break
     validation_file_names = [IMAGE_PATH]
     return validation_file_names, validation_file_numeric_labels, labels
 
@@ -125,9 +126,10 @@ if num_images % batch_size != 0:
                             for img in img_batch])
     pred_logits_tensor = model(validation_batch)
     pred_probs = F.softmax(pred_logits_tensor, dim=1).cpu().data.numpy()
-    pred_index = np.argmax(pred_probs, axis = 1)
-    print(label_names[pred_index])
-    y_pred.extend(pred_index)
+    pred_index = np.argmax(pred_probs, axis = 1)[0]
+   
+    print("classified " + IMAGE_PATH + " as " + label_names[pred_index])
+    #y_pred.extend(pred_index)
 # In[ ]:
 
 count = 0

@@ -62,3 +62,11 @@ epoch: 31, train loss: 0.2930, acc: 0.8995
 epoch: 31, validation loss: 1.7467, acc: 0.5857
 epoch: 32, train loss: 0.2840, acc: 0.9011
 epoch: 32, validation loss: 1.8749, acc: 0.5810
+epoch: 33, train loss: 0.2769, acc: 0.9040
+epoch: 33, validation loss: 1.8455, acc: 0.5780
+epoch: 34, train loss: 0.2660, acc: 0.9080
+epoch: 34, validation loss: 1.9561, acc: 0.5749
+epoch: 35, train loss: 0.2580, acc: 0.9113
+epoch: 35, validation loss: 1.8798, acc: 0.5805
+epoch: 36, train loss: 0.2467, acc: 0.9146
+epoch: 36, validation loss: 1.9452, acc: 0.5922
