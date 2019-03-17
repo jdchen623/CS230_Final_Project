@@ -46,7 +46,8 @@ image_datasets = {
         'train':
         datasets.ImageFolder('data/train', data_transforms['train']),
         'validation':
-        datasets.ImageFolder('data/validation', data_transforms['validation'])
+        datasets.ImageFolder('data/validation', data_transforms['validation']),
+            
     }
 
 dataloaders = {
