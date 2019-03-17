@@ -28,7 +28,7 @@ PRECISION_RECALL_PATH = "results/precision_recall_data_aug_max.txt"
 CONFUSION_MATRIX_PATH = "results/confusion_matrix_data_aug_max.txt"
 CLASSIFICATION_REPORT_PATH = "results/classification_report_data_aug_max"
 CONFUSION_MATRIX_PLOT_PATH = "results/output_data_aug.png"
-IMAGE_PATH = "data/validation/Baroque/63.jpg"
+IMAGE_PATH = "data/validation/Baroque/117.jpg"
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
