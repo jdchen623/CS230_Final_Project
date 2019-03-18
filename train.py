@@ -32,13 +32,13 @@ torch.__version__
 # ### 2. Create PyTorch data generators
 
 # In[35]:
-WEIGHTS_FILE_NAME = 'weights8_20_frozen_layers_dropout'
+WEIGHTS_FILE_NAME = 'testing'
 WEIGHTS_DIR = "models/pytorch"
 WEIGHTS_PATH = os.path.join(WEIGHTS_DIR, WEIGHTS_FILE_NAME)
 NUM_FROZEN = 161 - 20
 EPOCH_SAVE_FREQUENCY = 2
 NUM_EPOCHS = 50
-RESULTS_PATH = "results/results_20_layer_dropout.txt"
+RESULTS_PATH = "results/testing_layers.txt"
 
 try:
     os.mkdir(WEIGHTS_PATH)
@@ -97,14 +97,26 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # In[37]:
 
 
-model = models.resnet50(pretrained=True).to(device)
+model = models.resnet34(pretrained=True).to(device)
 
-layer_index = 0
-for param in model.parameters():
-    if layer_index < NUM_FROZEN:
+#layer_index = 0
+#for param in model.paramters():
+#    if layer_index < NUM_FROZEN:
+#        param.requires_grad = False
+#        layer_index += 1
+
+
+count = 0
+counts = []
+for child in model.children():
+    temp_count = 0
+    for param in child.parameters():
+        temp_count += 1
         param.requires_grad = False
-        layer_index += 1
-
+        count += 1
+    counts.append(temp_count)
+print("This count is: "+ str(count))
+print(counts)
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),

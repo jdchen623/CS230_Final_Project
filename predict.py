@@ -23,7 +23,7 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-WEIGHTS_PATH = "models/pytorch/weights7_reduced_layers_epoch8"
+WEIGHTS_PATH = "models/pytorch/weights6_20_frozen_layers.h5"
 PRECISION_RECALL_PATH = "results/precision_recall_data_aug_max.txt"
 CONFUSION_MATRIX_PATH = "results/confusion_matrix_data_aug_max.txt"
 CLASSIFICATION_REPORT_PATH = "results/classification_report_data_aug_max"
