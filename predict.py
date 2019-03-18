@@ -23,12 +23,12 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-WEIGHTS_PATH = "models/pytorch/weights6_20_frozen_layers.h5"
-PRECISION_RECALL_PATH = "results/test/precision_recall_20_frozen_layers.txt"
-CONFUSION_MATRIX_PATH = "results/test/confusion_matrix_20_frozen_layers.txt"
-CLASSIFICATION_REPORT_PATH = "results/test/classification_report_20_frozen_layers"
-CONFUSION_MATRIX_PLOT_PATH = "results/test/output_20_frozen_layers.png"
-DATA_DIR = "data/test"
+WEIGHTS_PATH = "models/pytorch/weights8_20_frozen_layers_dropout/weights8_20_frozen_layers_dropout_epoch12.h5"
+PRECISION_RECALL_PATH = "results/validation/precision_recall_20_dropout_epoch12.txt"
+CONFUSION_MATRIX_PATH = "results/validation/confusion_matrix_20_dropout_epoch12.txt"
+CLASSIFICATION_REPORT_PATH = "results/validation/classification_report_20_dropout_epoch12"
+CONFUSION_MATRIX_PLOT_PATH = "results/validation/output_20_dropout_epoch12.png"
+DATA_DIR = "data/validation"
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
@@ -98,6 +98,7 @@ model = models.resnet50(pretrained=False).to(device)
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
+               nn.Dropout(0.2),
                nn.Linear(128, 10)).to(device)
 model.load_state_dict(torch.load(WEIGHTS_PATH))
 model.eval()

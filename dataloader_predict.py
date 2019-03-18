@@ -68,8 +68,9 @@ model = models.resnet50(pretrained=False).to(device)
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
+               nn.Dropout(0.2),
                nn.Linear(128, 10)).to(device)
-model.load_state_dict(torch.load('models/pytorch/weights7_15_frozen_layers/weights7_15_frozen_layers_epoch40.h5'))
+model.load_state_dict(torch.load('models/pytorch/weights8_20_frozen_layers_dropout/weights8_20_frozen_layers_dropout_epoch20.h5'))
 model.eval()
 
 running_corrects = 0

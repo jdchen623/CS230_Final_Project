@@ -32,7 +32,7 @@ torch.__version__
 # ### 2. Create PyTorch data generators
 
 # In[35]:
-WEIGHTS_FILE_NAME = 'testing'
+WEIGHTS_FILE_NAME = 'dropout'
 WEIGHTS_DIR = "models/pytorch"
 WEIGHTS_PATH = os.path.join(WEIGHTS_DIR, WEIGHTS_FILE_NAME)
 NUM_FROZEN = 161 - 20
@@ -97,7 +97,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # In[37]:
 
 
-model = models.resnet34(pretrained=True).to(device)
+model = models.resnet50(pretrained=True).to(device)
 
 #layer_index = 0
 #for param in model.paramters():
