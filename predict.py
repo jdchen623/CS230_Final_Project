@@ -24,10 +24,11 @@ import os
 from preprocess import makeFileNameAndStylePairs
 
 WEIGHTS_PATH = "models/pytorch/weights6_20_frozen_layers.h5"
-PRECISION_RECALL_PATH = "results/precision_recall_data_aug_max.txt"
-CONFUSION_MATRIX_PATH = "results/confusion_matrix_data_aug_max.txt"
-CLASSIFICATION_REPORT_PATH = "results/classification_report_data_aug_max"
-CONFUSION_MATRIX_PLOT_PATH = "results/output_data_aug.png"
+PRECISION_RECALL_PATH = "results/test/precision_recall_20_frozen_layers.txt"
+CONFUSION_MATRIX_PATH = "results/test/confusion_matrix_20_frozen_layers.txt"
+CLASSIFICATION_REPORT_PATH = "results/test/classification_report_20_frozen_layers"
+CONFUSION_MATRIX_PLOT_PATH = "results/test/output_20_frozen_layers.png"
+DATA_DIR = "data/test"
 
 def get_validation_images():
     labels_dict = makeFileNameAndStylePairs()
@@ -35,7 +36,7 @@ def get_validation_images():
     validation_file_labels = []
     validation_file_numeric_labels = []
 
-    for root, dirs, files in os.walk("data/validation"):
+    for root, dirs, files in os.walk(DATA_DIR):
         dir_index = 0
         labels = sorted(dirs)
         for directory in sorted(dirs):
@@ -143,47 +144,47 @@ count = 0
 for i in range(len(y_pred)):
     if y_pred[i] == y_labels[i]:
         count += 1
-    if y_pred[i] != y_labels[i]:
-        print(validation_file_names[i] + " labeled as " + label_names[y_pred[i]])
-# print("Count: " + str(count))
-# print("Percentage: " + str(float(count)/len(y_pred)))
-#
-# results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
-# conf_mat = confusion_matrix(y_labels, y_pred)
-# print(results)
-# print(results, file = open(PRECISION_RECALL_PATH, 'w'))
-# print(conf_mat)
-# print(conf_mat, file = open(CONFUSION_MATRIX_PATH, 'w'))
-# print(classification_report(y_labels, y_pred))
-# print(classification_report(y_labels, y_pred), file = open(CLASSIFICATION_REPORT_PATH, 'w'))
-#
-#
-# import seaborn as sn
-# import pandas as pd
-# import matplotlib.pyplot as plt
-# array = conf_mat
-#
-#
-#
-# df_cm = pd.DataFrame(array, index = [i for i in label_names],
-#                                        columns = [i for i in label_names])
-# plt.figure(figsize = (20, 10))
-# sn_plot = sn.heatmap(df_cm, annot=True)
-# fig = sn_plot.get_figure()
-# fig.savefig(CONFUSION_MATRIX_PLOT_PATH)
-#
-#
-#
-#
-#
-#
-# # In[ ]:
-#
-#
-# # fig, axs = plt.subplots(1, len(img_list), figsize=(20, 5))
-# # for i, img in enumerate(img_list):
-# #     ax = axs[i]
-# #     ax.axis('off')
-# #     ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
-# #                                                           100*pred_probs[i,1]))
-# #     ax.imshow(img)
+    # if y_pred[i] != y_labels[i]:
+    #     print(validation_file_names[i] + " labeled as " + label_names[y_pred[i]])
+print("Count: " + str(count))
+print("Percentage: " + str(float(count)/len(y_pred)))
+
+results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
+conf_mat = confusion_matrix(y_labels, y_pred)
+print(results)
+print(results, file = open(PRECISION_RECALL_PATH, 'w'))
+print(conf_mat)
+print(conf_mat, file = open(CONFUSION_MATRIX_PATH, 'w'))
+print(classification_report(y_labels, y_pred))
+print(classification_report(y_labels, y_pred), file = open(CLASSIFICATION_REPORT_PATH, 'w'))
+
+
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
+array = conf_mat
+
+
+
+df_cm = pd.DataFrame(array, index = [i for i in label_names],
+                                       columns = [i for i in label_names])
+plt.figure(figsize = (20, 10))
+sn_plot = sn.heatmap(df_cm, annot=True)
+fig = sn_plot.get_figure()
+fig.savefig(CONFUSION_MATRIX_PLOT_PATH)
+
+
+
+
+
+
+# In[ ]:
+
+
+# fig, axs = plt.subplots(1, len(img_list), figsize=(20, 5))
+# for i, img in enumerate(img_list):
+#     ax = axs[i]
+#     ax.axis('off')
+#     ax.set_title("{:.0f}% Alien, {:.0f}% Predator".format(100*pred_probs[i,0],
+#                                                           100*pred_probs[i,1]))
+#     ax.imshow(img)
