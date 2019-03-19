@@ -23,11 +23,11 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-WEIGHTS_PATH = "models/pytorch/weights8_20_frozen_layers_dropout/weights8_20_frozen_layers_dropout_epoch12.h5"
-PRECISION_RECALL_PATH = "results/validation/precision_recall_20_dropout_epoch12.txt"
-CONFUSION_MATRIX_PATH = "results/validation/confusion_matrix_20_dropout_epoch12.txt"
-CLASSIFICATION_REPORT_PATH = "results/validation/classification_report_20_dropout_epoch12"
-CONFUSION_MATRIX_PLOT_PATH = "results/validation/output_20_dropout_epoch12.png"
+WEIGHTS_PATH = "models/pytorch/weights5_data_aug_max.h5"
+PRECISION_RECALL_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale.txt"
+CONFUSION_MATRIX_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale"
+CLASSIFICATION_REPORT_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale"
+CONFUSION_MATRIX_PLOT_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale.png"
 DATA_DIR = "data/validation"
 
 def get_validation_images():
@@ -98,9 +98,8 @@ model = models.resnet50(pretrained=False).to(device)
 model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
-               nn.Dropout(0.2),
                nn.Linear(128, 10)).to(device)
-model.load_state_dict(torch.load(WEIGHTS_PATH))
+model.load_state_dict(torch.load(WEIGHTS_PATH, map_location = device))
 model.eval()
 
 
@@ -152,12 +151,12 @@ print("Percentage: " + str(float(count)/len(y_pred)))
 
 results = precision_recall_fscore_support(y_labels, y_pred, average = "weighted")
 conf_mat = confusion_matrix(y_labels, y_pred)
-print(results)
-print(results, file = open(PRECISION_RECALL_PATH, 'w'))
-print(conf_mat)
-print(conf_mat, file = open(CONFUSION_MATRIX_PATH, 'w'))
-print(classification_report(y_labels, y_pred))
-print(classification_report(y_labels, y_pred), file = open(CLASSIFICATION_REPORT_PATH, 'w'))
+#print(results)
+#print(results, file = open(PRECISION_RECALL_PATH, 'w'))
+#print(conf_mat)
+#print(conf_mat, file = open(CONFUSION_MATRIX_PATH, 'w'))
+#print(classification_report(y_labels, y_pred))
+#print(classification_report(y_labels, y_pred), file = open(CLASSIFICATION_REPORT_PATH, 'w'))
 
 
 import seaborn as sn
@@ -170,7 +169,7 @@ array = conf_mat
 df_cm = pd.DataFrame(array, index = [i for i in label_names],
                                        columns = [i for i in label_names])
 plt.figure(figsize = (20, 10))
-sn_plot = sn.heatmap(df_cm, annot=True)
+sn_plot = sn.heatmap(df_cm, annot=True, vmin = 0, vmax = 850)
 fig = sn_plot.get_figure()
 fig.savefig(CONFUSION_MATRIX_PLOT_PATH)
 

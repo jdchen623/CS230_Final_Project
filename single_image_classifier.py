@@ -23,13 +23,13 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-WEIGHTS_PATH = "models/pytorch/weights6_20_frozen_layers.h5"
+WEIGHTS_PATH = "models/pytorch/weights7_30_frozen_layers.h5"
 PRECISION_RECALL_PATH = "results/precision_recall_data_aug_max.txt"
 CONFUSION_MATRIX_PATH = "results/confusion_matrix_data_aug_max.txt"
 CLASSIFICATION_REPORT_PATH = "results/classification_report_data_aug_max"
 CONFUSION_MATRIX_PLOT_PATH = "results/output_data_aug.png"
 
-IMAGE_PATH = "data/validation/Baroque/117.jpg"
+IMAGE_PATH = "data/validation/Realism/3910.jpg"
 
 
 def get_validation_images():
@@ -91,7 +91,7 @@ model.fc = nn.Sequential(
                nn.Linear(2048, 128),
                nn.ReLU(inplace=True),
                nn.Linear(128, 10)).to(device)
-model.load_state_dict(torch.load(WEIGHTS_PATH))
+model.load_state_dict(torch.load(WEIGHTS_PATH, map_location = device))
 model.eval()
 
 
