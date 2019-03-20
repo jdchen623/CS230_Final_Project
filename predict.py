@@ -23,11 +23,11 @@ import torch.optim as optim
 import os
 from preprocess import makeFileNameAndStylePairs
 
-WEIGHTS_PATH = "models/pytorch/weights5_data_aug_max.h5"
-PRECISION_RECALL_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale.txt"
-CONFUSION_MATRIX_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale"
-CLASSIFICATION_REPORT_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale"
-CONFUSION_MATRIX_PLOT_PATH = "results/validation/confusin_matrix_data_aug_max_850_scale.png"
+WEIGHTS_PATH = "models/pytorch/weights3_resnet50_10_classes.h5"
+PRECISION_RECALL_PATH = "results/validation/confusin_matrix_pre_data_aug_850_scale.txt"
+CONFUSION_MATRIX_PATH = "results/validation/confusin_matrix_pre_data_aug_850_scale"
+CLASSIFICATION_REPORT_PATH = "results/validation/confusin_matrix_pre_data_aug_max_850_scale"
+CONFUSION_MATRIX_PLOT_PATH = "results/validation/confusin_matrix_pre_data_aug_max_850_scale.png"
 DATA_DIR = "data/validation"
 
 def get_validation_images():
